@@ -363,7 +363,7 @@ Ayush Rathore
 
 Indian Institute of Technology Madras (IIT Madras)
 
-Take-Home Assessment Submission – Del Capital
+Take-Home Assessment Submission Del Capital
 
 ---
 
