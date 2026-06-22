@@ -1,0 +1,61 @@
+# =========================================
+# Del Capital - Account Aggregator Config
+# =========================================
+
+# Server
+server.port=8080
+
+# PostgreSQL (update credentials as needed)
+spring.datasource.url=jdbc:postgresql://localhost:5432/aa_db
+spring.datasource.username=${DB_USERNAME:postgres}
+spring.datasource.password=${DB_PASSWORD:postgres}
+spring.datasource.driver-class-name=org.postgresql.Driver
+
+# JPA
+spring.jpa.hibernate.ddl-auto=validate
+spring.jpa.show-sql=false
+spring.jpa.properties.hibernate.format_sql=true
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+
+# Flyway DB migrations
+spring.flyway.enabled=true
+spring.flyway.locations=classpath:db/migration
+spring.flyway.baseline-on-migrate=true
+
+# Digio Sandbox
+digio.base-url=${DIGIO_BASE_URL:https://ext.digio.in:444}
+digio.username=${DIGIO_USERNAME:ACK25030511375911186LKWJDXERYTXQ}
+digio.password=${DIGIO_PASSWORD:CGYGOZKNCMHN8I8GSA5HH2DFKRSR732L}
+digio.template-id=${DIGIO_TEMPLATE_ID:CTMP250909154046573UG2FM8U7NZK36}
+digio.connect-timeout=10000
+digio.read-timeout=30000
+
+# Actuator
+management.endpoints.web.exposure.include=health,info,metrics
+management.endpoint.health.show-details=always
+management.info.env.enabled=true
+
+# Springdoc / Swagger
+springdoc.api-docs.path=/v3/api-docs
+springdoc.swagger-ui.path=/swagger-ui.html
+springdoc.swagger-ui.operationsSorter=method
+
+# Logging
+logging.level.com.delcapital=DEBUG
+logging.level.org.springframework.web=INFO
+logging.pattern.console=%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n
+
+# App Info
+info.app.name=Account Aggregator
+info.app.description=Del Capital AA Integration
+info.app.version=1.0.0
+
+# Resilience4j retry for Digio calls
+resilience4j.retry.instances.digio.max-attempts=3
+resilience4j.retry.instances.digio.wait-duration=2s
+resilience4j.retry.instances.digio.retry-exceptions=java.io.IOException,org.springframework.web.client.ResourceAccessException
+
+# Resilience4j circuit breaker
+resilience4j.circuitbreaker.instances.digio.sliding-window-size=10
+resilience4j.circuitbreaker.instances.digio.failure-rate-threshold=50
+resilience4j.circuitbreaker.instances.digio.wait-duration-in-open-state=30s
